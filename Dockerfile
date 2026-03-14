@@ -2,9 +2,16 @@ FROM ghcr.io/eramba/eramba:latest
 
 USER root
 
+RUN apt-get update && apt-get install -y wget gnupg lsb-release
+
+RUN wget https://repo.mysql.com/mysql-apt-config_0.8.29-1_all.deb
+
+RUN dpkg -i mysql-apt-config_0.8.29-1_all.deb
+
 RUN apt-get update && \
-    apt-get install -y mysql-server redis-server cron supervisor && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y mysql-server
+
+    
 
 # Copier configs
 COPY mysql/conf.d /etc/mysql/conf.d
